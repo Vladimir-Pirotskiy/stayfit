@@ -1,4 +1,4 @@
-import SidebarLayout from '@/app/components/SidebarLayout'
+import SidebarLayout from '@/components/SidebarLayout'
 import '@tabler/core/dist/css/tabler.min.css'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
