@@ -11,26 +11,36 @@
     "format": "prettier --write ."
   },
   "dependencies": {
+    "autoprefixer": "^10.4.20",
     "next": "14.2.8",
     "react": "^19.0.0-rc-a03254bc-20240905",
     "react-dom": "^19.0.0-rc-a03254bc-20240905",
     "sharp": "^0.33.5"
   },
   "devDependencies": {
-    "@types/node": "^20",
-    "@types/react": "^18",
-    "@types/react-dom": "^18",
-    "eslint": "^8",
+    "@types/node": "^20.16.5",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "eslint": "^8.57.0",
     "eslint-config-next": "14.2.8",
     "eslint-config-prettier": "^9.1.0",
     "husky": "^9.1.5",
     "lint-staged": "^15.2.10",
-    "postcss": "^8",
-    "prettier": "3.3.3",
-    "tailwindcss": "^3.4.1",
-    "typescript": "^5"
+    "postcss": "^8.4.45",
+    "prettier": "^3.3.3",
+    "prettier-plugin-organize-imports": "^4.0.0",
+    "prettier-plugin-packagejson": "^2.5.2",
+    "prettier-plugin-tailwindcss": "^0.6.6",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.4"
   },
   "lint-staged": {
-    "**/*": "prettier --write --ignore-unknown"
+    "**/*.{js,jsx,ts,tsx}": [
+      "prettier --write --plugin prettier-plugin-tailwindcss --plugin prettier-plugin-organize-imports"
+    ],
+    "package.json": [
+      "prettier --write --plugin prettier-plugin-packagejson"
+    ]
   }
 }
+
