@@ -1,3 +1,5 @@
+import SidebarLayout from '@/app/components/SidebarLayout'
+import '@tabler/core/dist/css/tabler.min.css'
 import type { Metadata } from 'next'
 import localFont from 'next/font/local'
 import './globals.css'
@@ -28,7 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <SidebarLayout>{children}</SidebarLayout>
       </body>
     </html>
   )
