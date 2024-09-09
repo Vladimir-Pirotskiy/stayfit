@@ -13,6 +13,7 @@ const config: Config = {
         secondary: '#4CAF91',
         background: '#1C201F',
         foreground: '#0E100F',
+        neutralGray: '#242827',
       },
     },
   },
