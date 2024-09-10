@@ -9,6 +9,7 @@ import {
   IconUsers,
   IconWallet,
 } from '@tabler/icons-react'
+import Link from 'next/link'
 import { ReactNode } from 'react'
 
 interface SidebarLayoutProps {
@@ -20,58 +21,85 @@ const SidebarLayout = ({ children }: SidebarLayoutProps) => {
     <div className="flex min-h-screen">
       <aside className="w-64  bg-background text-white border-r-2 border-neutralGray">
         <div className="flex h-full flex-col">
-          <div className="flex h-20 items-center justify-start px-10">
+          <Link
+            href="/"
+            className="flex h-20 items-center justify-start px-10 !no-underline"
+          >
             <Logo />
-          </div>
+          </Link>
           <nav className="flex-1 px-4 py-4">
             <ul className="space-y-0">
               <li>
-                <div className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark">
+                <Link
+                  href="/dashboard"
+                  className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark"
+                >
                   <IconLayoutDashboard />
                   Dashboard
-                </div>
+                </Link>
               </li>
               <li>
-                <div className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark">
+                <Link
+                  href="/analytics"
+                  className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark"
+                >
                   <IconAlignBoxBottomCenter />
                   Analytics
-                </div>
+                </Link>
               </li>
               <li>
-                <div className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark">
+                <Link
+                  href="/business"
+                  className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark"
+                >
                   <IconBriefcase />
                   Business
-                </div>
+                </Link>
               </li>
               <li>
-                <div className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark">
+                <Link
+                  href="/refunds"
+                  className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark"
+                >
                   <IconCash />
                   Refunds
-                </div>
+                </Link>
               </li>
               <li>
-                <div className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark">
+                <Link
+                  href="/reports"
+                  className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark"
+                >
                   <IconAlertCircle />
                   Reports
-                </div>
+                </Link>
               </li>
               <li>
-                <div className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark">
+                <Link
+                  href="/payments"
+                  className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark"
+                >
                   <IconWallet />
                   Payments
-                </div>
+                </Link>
               </li>
               <li>
-                <div className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark">
+                <Link
+                  href="/users"
+                  className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark"
+                >
                   <IconUsers />
                   Users
-                </div>
+                </Link>
               </li>
               <li>
-                <div className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark">
+                <Link
+                  href="/settings"
+                  className="flex w-full justify-start gap-2 text-white btn btn-ghost-dark"
+                >
                   <IconSettings />
                   Settings
-                </div>
+                </Link>
               </li>
             </ul>
           </nav>
