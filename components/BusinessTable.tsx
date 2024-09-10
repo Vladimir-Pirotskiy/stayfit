@@ -1,11 +1,24 @@
+'use client'
+
 import { Category } from '@/lib/actions'
+import { useCategoriesStore } from '@/store/useCategoriesStore'
 import { IconDotsVertical } from '@tabler/icons-react'
+import { useEffect } from 'react'
 
 export default function BusinessTable({
-  categories,
+  initialCategories,
 }: {
-  categories: Category[]
+  initialCategories: Category[]
 }) {
+  const { categories, setInitialCategories } = useCategoriesStore((state) => ({
+    categories: state.categories,
+    setInitialCategories: state.setInitialCategories,
+  }))
+
+  useEffect(() => {
+    setInitialCategories(initialCategories)
+  }, [initialCategories, setInitialCategories])
+
   return (
     <div className="table-responsive relative">
       <table className="min-w-full table-auto border-collapse bg-background shadow-md relative">

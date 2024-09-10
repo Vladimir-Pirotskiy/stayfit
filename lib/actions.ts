@@ -18,3 +18,19 @@ export async function fetchCategories(): Promise<Category[]> {
     throw new Error('Failed to fetch categories')
   }
 }
+
+export async function addCategory(name: string): Promise<Category> {
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/vip/api/stores/categories/`,
+      {
+        name: name,
+      }
+    )
+
+    return response.data
+  } catch (error) {
+    console.error('Error adding category:', error)
+    throw new Error('Failed to add category')
+  }
+}

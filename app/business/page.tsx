@@ -7,6 +7,7 @@ import { fetchCategories } from '@/lib/actions'
 
 export default async function Business() {
   const categories = (await fetchCategories()) || []
+
   return (
     <>
       <section className="flex justify-between items-center">
@@ -22,7 +23,7 @@ export default async function Business() {
       </section>
 
       <section className="px-2 mt-7">
-        <BusinessTable categories={categories} />
+        <BusinessTable initialCategories={categories} />
       </section>
     </>
   )
