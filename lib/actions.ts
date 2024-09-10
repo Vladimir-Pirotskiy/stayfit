@@ -43,7 +43,7 @@ export async function fetchStoresByCategory(
   storeCategoryId: string,
   page: number = 1,
   pageSize: number = 10
-): Promise<Store[]> {
+): Promise<{ total: number; stores: Store[] }> {
   try {
     const response = await axios.get(
       `${API_BASE_URL}${API_VIP_BASE_PATH}/stores/by_category/${storeCategoryId}`,
@@ -54,7 +54,11 @@ export async function fetchStoresByCategory(
         },
       }
     )
-    return response.data[1]
+
+    const total = response.data[0]
+    const stores = response.data[1]
+
+    return { total, stores }
   } catch (error) {
     console.error('Error fetching stores by category:', error)
     throw new Error('Failed to fetch stores')

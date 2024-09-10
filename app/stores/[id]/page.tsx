@@ -7,7 +7,7 @@ import Link from 'next/link'
 
 export default async function Stores({ params }: { params: { id: string } }) {
   const categoryId = params.id
-  const stores = await fetchStoresByCategory(categoryId)
+  const { stores, total } = await fetchStoresByCategory(categoryId)
 
   return (
     <>
@@ -29,7 +29,11 @@ export default async function Stores({ params }: { params: { id: string } }) {
       </section>
 
       <section className="px-2 mt-7">
-        <StoreTable stores={stores} />
+        <StoreTable
+          initialStores={stores}
+          categoryId={categoryId}
+          total={total}
+        />
       </section>
     </>
   )
