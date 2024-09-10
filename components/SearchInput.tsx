@@ -23,7 +23,7 @@ export default function SearchInput() {
         type="text"
         value={searchValue}
         onChange={handleInputChange}
-        className="form-control form-control bg-neutralGray text-neutral-500 pr-10"
+        className="form-control form-control bg-background text-neutral-500 pr-10"
         placeholder="ID / Keyword"
       />
       {searchValue ? (
