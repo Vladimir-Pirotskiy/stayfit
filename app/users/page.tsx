@@ -1,3 +1,9 @@
+import Heading from '@/components/Heading'
+
 export default function Users() {
-  return <h1 className="text-white">Index Users</h1>
+  return (
+    <div className="flex justify-start items-center">
+      <Heading title={'Users'} />
+    </div>
+  )
 }

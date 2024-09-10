@@ -1,3 +1,9 @@
+import Heading from '@/components/Heading'
+
 export default function Refunds() {
-  return <h1 className="text-white">Index Refunds</h1>
+  return (
+    <div className="flex justify-start items-center">
+      <Heading title={'Refunds'} />
+    </div>
+  )
 }
