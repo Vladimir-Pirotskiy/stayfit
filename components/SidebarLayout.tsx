@@ -105,8 +105,8 @@ const SidebarLayout = ({ children }: SidebarLayoutProps) => {
           </nav>
         </div>
       </aside>
-      <div className="flex-1 bg-gray-100">
-        <main className="container mx-auto px-4 py-4 bg-background min-h-screen">
+      <div className="flex-1 bg-background">
+        <main className="container mx-auto px-4 py-4 bg-background min-h-screen ">
           {children}
         </main>
       </div>
