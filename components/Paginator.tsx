@@ -28,6 +28,42 @@ export default function Paginator({
     onPageSizeChange(newSize)
   }
 
+  // Логика для отображения страниц с троеточиями
+  const getPages = () => {
+    const pages = []
+    const maxVisiblePages = 3 // Количество видимых страниц в начале и конце
+    const hasLeftEllipsis = currentPage > maxVisiblePages + 1
+    const hasRightEllipsis = currentPage < totalPages - maxVisiblePages
+
+    if (hasLeftEllipsis) {
+      pages.push(1, '...')
+    } else {
+      for (let i = 1; i <= Math.min(maxVisiblePages, totalPages); i++) {
+        pages.push(i)
+      }
+    }
+
+    if (hasLeftEllipsis && hasRightEllipsis) {
+      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
+        pages.push(i)
+      }
+    } else if (hasRightEllipsis) {
+      for (
+        let i = Math.max(totalPages - maxVisiblePages + 1, currentPage - 1);
+        i <= totalPages;
+        i++
+      ) {
+        pages.push(i)
+      }
+    }
+
+    if (hasRightEllipsis) {
+      pages.push('...', totalPages)
+    }
+
+    return pages
+  }
+
   return (
     <div className="flex justify-between items-center mt-4">
       <div className="text-sm text-gray-400">
@@ -49,19 +85,30 @@ export default function Paginator({
           >
             <IconChevronLeft className="h-4 w-4" />
           </button>
-          {Array.from({ length: totalPages }).map((_, index) => (
-            <button
-              key={index}
-              onClick={() => onPageChange(index + 1)}
-              className={`inline-flex items-center px-3 py-1 text-sm font-medium ${
-                currentPage === index + 1
-                  ? '!bg-primary text-white'
-                  : 'text-gray-400 bg-gray-800 hover:bg-gray-700'
-              } border border-gray-700`}
-            >
-              {index + 1}
-            </button>
-          ))}
+
+          {getPages().map((page, index) =>
+            page === '...' ? (
+              <span
+                key={index}
+                className="inline-flex items-center px-3 py-1 text-sm font-medium text-gray-400"
+              >
+                ...
+              </span>
+            ) : (
+              <button
+                key={index}
+                onClick={() => onPageChange(page as number)}
+                className={`inline-flex items-center px-3 py-1 text-sm font-medium ${
+                  currentPage === page
+                    ? '!bg-primary text-white'
+                    : 'text-gray-400 bg-gray-800 hover:bg-gray-700'
+                } border border-gray-700`}
+              >
+                {page}
+              </button>
+            )
+          )}
+
           <button
             onClick={() => onPageChange(currentPage + 1)}
             disabled={currentPage === totalPages}
