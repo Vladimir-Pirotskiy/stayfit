@@ -3,7 +3,7 @@
 import DropdownFilter from './DropdownFilter'
 
 export default function Filters() {
-  const filterOptions = ['Option 1', 'Option 2', 'Option 3']
+  const filterOptions = ['Option 1', 'Option 2']
 
   return (
     <div className="flex gap-4 items-center">
