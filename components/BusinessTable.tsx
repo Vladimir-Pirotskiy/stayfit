@@ -3,6 +3,7 @@
 import { Category } from '@/lib/actions'
 import { useCategoriesStore } from '@/store/useCategoriesStore'
 import { IconDotsVertical } from '@tabler/icons-react'
+import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 export default function BusinessTable({
@@ -15,9 +16,15 @@ export default function BusinessTable({
     setInitialCategories: state.setInitialCategories,
   }))
 
+  const router = useRouter()
+
   useEffect(() => {
     setInitialCategories(initialCategories)
   }, [initialCategories, setInitialCategories])
+
+  const handleCategoryClick = (categoryId: string) => {
+    router.push(`/stores/${categoryId}`)
+  }
 
   return (
     <div className="table-responsive relative">
@@ -40,7 +47,14 @@ export default function BusinessTable({
               className="border-b border-gray-700 transition-colors duration-200 hover:bg-gray-800"
             >
               <td className="p-4 text-gray-300">{'N/A'}</td>
-              <td className="p-4 text-gray-300">{category.name ?? 'N/A'}</td>
+
+              <td
+                className="p-4 text-gray-300 cursor-pointer hover:text-blue-400"
+                onClick={() => handleCategoryClick(category.id)}
+              >
+                {category.name ?? 'N/A'}
+              </td>
+
               <td className="p-4 text-gray-300">{'N/A'}</td>
               <td className="p-4 text-gray-300">{'N/A'}</td>
               <td className="p-4 text-gray-300">{'N/A'}</td>
