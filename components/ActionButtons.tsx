@@ -7,7 +7,7 @@ export default function ActionButtons() {
   const [isModalOpen, setIsModalOpen] = useState(false)
 
   const toggleModal = () => {
-    setIsModalOpen(!isModalOpen)
+    setIsModalOpen((prev) => !prev)
   }
 
   return (
@@ -22,9 +22,7 @@ export default function ActionButtons() {
         Add new category
       </button>
 
-      {isModalOpen && (
-        <AddBusinessModal isOpen={isModalOpen} toggleModal={toggleModal} />
-      )}
+      <AddBusinessModal isOpen={isModalOpen} toggleModal={toggleModal} />
     </div>
   )
 }
