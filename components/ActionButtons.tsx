@@ -19,7 +19,7 @@ export default function ActionButtons() {
         className="text-white btn !bg-secondary btn-ghost-dark"
         onClick={toggleModal}
       >
-        Add business
+        Add new category
       </button>
 
       {isModalOpen && (
