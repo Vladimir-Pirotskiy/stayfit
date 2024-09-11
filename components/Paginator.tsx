@@ -28,37 +28,26 @@ export default function Paginator({
     onPageSizeChange(newSize)
   }
 
-  // Логика для отображения страниц с троеточиями
   const getPages = () => {
     const pages = []
-    const maxVisiblePages = 3 // Количество видимых страниц в начале и конце
-    const hasLeftEllipsis = currentPage > maxVisiblePages + 1
-    const hasRightEllipsis = currentPage < totalPages - maxVisiblePages
+    const maxVisiblePages = 5
+    const halfRange = Math.floor(maxVisiblePages / 2)
 
-    if (hasLeftEllipsis) {
-      pages.push(1, '...')
-    } else {
-      for (let i = 1; i <= Math.min(maxVisiblePages, totalPages); i++) {
-        pages.push(i)
-      }
+    const startPage = Math.max(1, currentPage - halfRange)
+    const endPage = Math.min(totalPages, currentPage + halfRange)
+
+    if (startPage > 1) {
+      pages.push(1)
+      if (startPage > 2) pages.push('...')
     }
 
-    if (hasLeftEllipsis && hasRightEllipsis) {
-      for (let i = currentPage - 1; i <= currentPage + 1; i++) {
-        pages.push(i)
-      }
-    } else if (hasRightEllipsis) {
-      for (
-        let i = Math.max(totalPages - maxVisiblePages + 1, currentPage - 1);
-        i <= totalPages;
-        i++
-      ) {
-        pages.push(i)
-      }
+    for (let i = startPage; i <= endPage; i++) {
+      pages.push(i)
     }
 
-    if (hasRightEllipsis) {
-      pages.push('...', totalPages)
+    if (endPage < totalPages) {
+      if (endPage < totalPages - 1) pages.push('...')
+      pages.push(totalPages)
     }
 
     return pages
@@ -73,70 +62,53 @@ export default function Paginator({
         <span className="font-medium">
           {Math.min(currentPage * pageSize, totalItems)}
         </span>{' '}
-        of <span className="font-medium">{totalItems}</span> results
+        of <span className="font-medium">{totalItems}</span> items
       </div>
 
-      <div className="flex items-center">
-        <nav aria-label="Pagination" className="inline-flex space-x-1">
-          <button
-            onClick={() => onPageChange(currentPage - 1)}
-            disabled={currentPage === 1}
-            className="inline-flex items-center px-2 py-1 text-sm font-medium text-gray-500 bg-gray-800 border border-gray-700 rounded-l-md hover:bg-gray-700 disabled:opacity-50"
-          >
-            <IconChevronLeft className="h-4 w-4" />
-          </button>
+      <div className="flex items-center space-x-2 ml-auto">
+        <button
+          onClick={() => onPageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+          className="p-2 disabled:opacity-50"
+        >
+          <IconChevronLeft className="!text-secondary" />
+        </button>
 
-          {getPages().map((page, index) =>
-            page === '...' ? (
-              <span
-                key={index}
-                className="inline-flex items-center px-3 py-1 text-sm font-medium text-gray-400"
-              >
-                ...
-              </span>
-            ) : (
-              <button
-                key={index}
-                onClick={() => onPageChange(page as number)}
-                className={`inline-flex items-center px-3 py-1 text-sm font-medium ${
-                  currentPage === page
-                    ? '!bg-primary text-white'
-                    : 'text-gray-400 bg-gray-800 hover:bg-gray-700'
-                } border border-gray-700`}
-              >
-                {page}
-              </button>
-            )
-          )}
+        {getPages().map((page, index) =>
+          typeof page === 'number' ? (
+            <button
+              key={index}
+              onClick={() => onPageChange(page)}
+              className={`px-2 py-1 ${page === currentPage ? '!bg-primary text-white ' : 'text-gray-500'}`}
+            >
+              {page}
+            </button>
+          ) : (
+            <span key={index} className="px-3 py-1 text-gray-500">
+              ...
+            </span>
+          )
+        )}
 
-          <button
-            onClick={() => onPageChange(currentPage + 1)}
-            disabled={currentPage === totalPages}
-            className="inline-flex items-center px-2 py-1 text-sm font-medium text-gray-500 bg-gray-800 border border-gray-700 rounded-r-md hover:bg-gray-700 disabled:opacity-50"
-          >
-            <IconChevronRight className="h-4 w-4" />
-          </button>
-        </nav>
+        <button
+          onClick={() => onPageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+          className="p-2 disabled:opacity-50"
+        >
+          <IconChevronRight className="!text-secondary" />
+        </button>
+      </div>
 
-        <div className="ml-4">
-          <label
-            htmlFor="pageSize"
-            className="text-sm font-medium text-gray-400"
-          >
-            Items per page:
-          </label>
-          <select
-            id="pageSize"
-            value={localPageSize}
-            onChange={handlePageSizeChange}
-            className="ml-2 border border-gray-600 bg-gray-800 text-white py-2 px-3 text-sm leading-5 focus:border-primary focus:ring-primary rounded-md shadow-sm"
-          >
-            <option value={10}>10</option>
-            <option value={20}>20</option>
-            <option value={50}>50</option>
-            <option value={100}>100</option>
-          </select>
-        </div>
+      <div className="text-sm">
+        <select
+          value={localPageSize}
+          onChange={handlePageSizeChange}
+          className="p-1 bg-gray-800 text-gray-300 border border-gray-600 rounded"
+        >
+          <option value={10}>10</option>
+          <option value={20}>20</option>
+          <option value={50}>50</option>
+        </select>
       </div>
     </div>
   )
