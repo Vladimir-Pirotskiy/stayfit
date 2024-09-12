@@ -3,10 +3,18 @@ import BusinessTable from '@/components/BusinessTable'
 import Filters from '@/components/Filters'
 import Heading from '@/components/Heading'
 import SearchInput from '@/components/SearchInput'
-import { fetchCategories } from '@/lib/actions'
+import Toast from '@/components/Toast'
+import { Category, fetchCategories } from '@/lib/actions'
 
 export default async function Business() {
-  const categories = (await fetchCategories()) || []
+  let categories: Category[] = []
+  let errorMessage: string | undefined
+
+  try {
+    categories = await fetchCategories()
+  } catch (error) {
+    errorMessage = 'Failed to load categories. Please try again later.'
+  }
 
   return (
     <>
@@ -25,6 +33,8 @@ export default async function Business() {
       <section className="px-2 mt-7">
         <BusinessTable initialCategories={categories} />
       </section>
+
+      {errorMessage && <Toast errorMessage={errorMessage} />}
     </>
   )
 }

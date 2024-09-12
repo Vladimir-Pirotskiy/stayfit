@@ -68,7 +68,7 @@ export default function Paginator({
       <div className="flex items-center space-x-2 ml-auto">
         <button
           onClick={() => onPageChange(currentPage - 1)}
-          disabled={currentPage === 1}
+          disabled={currentPage === 1 || totalItems === 0}
           className="p-2 disabled:opacity-50"
         >
           <IconChevronLeft className="!text-secondary" />
@@ -92,7 +92,7 @@ export default function Paginator({
 
         <button
           onClick={() => onPageChange(currentPage + 1)}
-          disabled={currentPage === totalPages}
+          disabled={currentPage === totalPages || totalItems === 0}
           className="p-2 disabled:opacity-50"
         >
           <IconChevronRight className="!text-secondary" />

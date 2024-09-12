@@ -2,12 +2,23 @@ import Filters from '@/components/Filters'
 import Heading from '@/components/Heading'
 import SearchInput from '@/components/SearchInput'
 import StoreTable from '@/components/StoreTable'
-import { fetchStoresByCategory } from '@/lib/actions'
+import Toast from '@/components/Toast'
+import { fetchStoresByCategory, Store } from '@/lib/actions'
 import Link from 'next/link'
 
 export default async function Stores({ params }: { params: { id: string } }) {
   const categoryId = params.id
-  const { stores, total } = await fetchStoresByCategory(categoryId)
+  let stores: Store[] = []
+  let total = 0
+  let errorMessage: string | undefined = undefined
+
+  try {
+    const data = await fetchStoresByCategory(categoryId)
+    stores = data.stores
+    total = data.total
+  } catch (error) {
+    errorMessage = 'Failed to load stores. Please try again later.'
+  }
 
   return (
     <>
@@ -35,6 +46,8 @@ export default async function Stores({ params }: { params: { id: string } }) {
           total={total}
         />
       </section>
+
+      {errorMessage && <Toast errorMessage={errorMessage} />}
     </>
   )
 }
