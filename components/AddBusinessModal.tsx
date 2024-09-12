@@ -25,17 +25,26 @@ export default function AddBusinessModal({
     handleSubmit,
     formState: { errors },
   } = useForm<FormData>()
-  const [isLoading, setIsLoading] = useState(false)
-  const [isVisible, setIsVisible] = useState(false) // Теперь модалка скрыта, пока не сработает анимация
+  const [isVisible, setIsVisible] = useState(false)
 
-  const addCategory = useCategoriesStore((state) => state.addCategory)
-
+  const { addCategory, isLoading, setLoading } = useCategoriesStore(
+    (state) => ({
+      addCategory: state.addCategory,
+      isLoading: state.isLoading,
+      setLoading: state.setLoading,
+    })
+  )
   const onSubmit = async (data: FormData) => {
-    setIsLoading(true)
-    const newCategory = await addCategoryAPI(data.category)
-    addCategory(newCategory)
-    toggleModal()
-    setIsLoading(false)
+    setLoading(true)
+    try {
+      const newCategory = await addCategoryAPI(data.category)
+      addCategory(newCategory)
+      toggleModal()
+    } catch (error) {
+      console.error('Error adding category:', error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
