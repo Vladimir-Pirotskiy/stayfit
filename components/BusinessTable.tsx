@@ -1,30 +1,40 @@
 'use client'
 
-import { Category } from '@/lib/actions'
+import Toast from '@/components/Toast'
+import { Category, fetchCategories } from '@/lib/actions'
 import { useCategoriesStore } from '@/store/useCategoriesStore'
 import { useRouter } from 'next/navigation'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
-export default function BusinessTable({
-  initialCategories,
-}: {
-  initialCategories: Category[]
-}) {
-  const { categories, isLoading, setInitialCategories, setLoading } =
-    useCategoriesStore((state) => ({
-      categories: state.categories,
+export default function BusinessTable() {
+  const { isLoading, setLoading, shouldUpdate } = useCategoriesStore(
+    (state) => ({
       isLoading: state.isLoading,
-      setInitialCategories: state.setInitialCategories,
       setLoading: state.setLoading,
-    }))
+      shouldUpdate: state.shouldUpdate,
+    })
+  )
 
+  const [categories, setCategories] = useState<Category[]>([])
+  let errorMessage: string | undefined
   const router = useRouter()
 
-  useEffect(() => {
+  const loadCategories = async () => {
     setLoading(true)
-    setInitialCategories(initialCategories)
-    setLoading(false)
-  }, [initialCategories, setInitialCategories, setLoading])
+    try {
+      const fetchedCategories = await fetchCategories()
+      setCategories(fetchedCategories)
+    } catch (error) {
+      console.error('Failed to load categories', error)
+      errorMessage = 'Failed to load categories. Please try again later.'
+    } finally {
+      setLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    loadCategories()
+  }, [shouldUpdate])
 
   const handleCategoryClick = (categoryId: string) => {
     router.push(`/stores/${categoryId}`)
@@ -68,6 +78,7 @@ export default function BusinessTable({
           )}
         </tbody>
       </table>
+      {errorMessage && <Toast errorMessage={errorMessage} />}
     </div>
   )
 }

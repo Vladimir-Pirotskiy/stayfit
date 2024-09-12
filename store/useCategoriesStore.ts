@@ -1,22 +1,15 @@
-import { Category } from '@/lib/actions'
 import { create } from 'zustand'
 
 type CategoriesState = {
-  categories: Category[]
   isLoading: boolean
-  setInitialCategories: (categories: Category[]) => void
-  addCategory: (category: Category) => void
+  shouldUpdate: boolean // Флаг для обновления
   setLoading: (loading: boolean) => void
+  toggleUpdate: () => void // Функция для инверсии флага
 }
 
 export const useCategoriesStore = create<CategoriesState>((set) => ({
-  categories: [],
   isLoading: false,
-  setInitialCategories: (categories) => set({ categories }),
-
-  addCategory: (category) =>
-    set((state) => ({
-      categories: [...state.categories, category],
-    })),
-  setLoading: (loading) => set({ isLoading: loading }),
+  shouldUpdate: false,
+  setLoading: (loading: boolean) => set({ isLoading: loading }),
+  toggleUpdate: () => set((state) => ({ shouldUpdate: !state.shouldUpdate })), // Инвертируем флаг
 }))

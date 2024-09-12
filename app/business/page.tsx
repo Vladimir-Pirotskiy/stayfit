@@ -3,19 +3,8 @@ import BusinessTable from '@/components/BusinessTable'
 import Filters from '@/components/Filters'
 import Heading from '@/components/Heading'
 import SearchInput from '@/components/SearchInput'
-import Toast from '@/components/Toast'
-import { Category, fetchCategories } from '@/lib/actions'
 
-export default async function Business() {
-  let categories: Category[] = []
-  let errorMessage: string | undefined
-
-  try {
-    categories = await fetchCategories()
-  } catch (error) {
-    errorMessage = 'Failed to load categories. Please try again later.'
-  }
-
+export default function Business() {
   return (
     <>
       <section className="flex justify-between items-center">
@@ -31,10 +20,8 @@ export default async function Business() {
       </section>
 
       <section className="px-2 mt-7">
-        <BusinessTable initialCategories={categories} />
+        <BusinessTable />
       </section>
-
-      {errorMessage && <Toast errorMessage={errorMessage} />}
     </>
   )
 }
