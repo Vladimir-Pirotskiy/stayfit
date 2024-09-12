@@ -1,6 +1,7 @@
 'use client'
 
 import { fetchStoresByCategory, Store } from '@/lib/actions'
+import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import Paginator from './Paginator'
 
@@ -42,7 +43,13 @@ export default function StoreTable({
 
   return (
     <div className="table-responsive relative">
-      <table className="min-w-full table-auto border-collapse bg-background shadow-md relative">
+      <ol className="breadcrumb" aria-label="breadcrumbs">
+        <li className="breadcrumb-item">
+          <Link href="/business">Business</Link>
+        </li>
+        <li className="breadcrumb-item active text-white">Store</li>
+      </ol>
+      <table className="mt-1 min-w-full table-auto border-collapse bg-background shadow-md relative">
         <thead>
           <tr className="bg-gray-800 text-left text-gray-300">
             <th className="p-4 border-b border-gray-700">Store Name</th>
